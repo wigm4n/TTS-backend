@@ -2,13 +2,12 @@ package ru.hse.thesisTts.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hse.thesisTts.process.CallProcessService;
-import ru.hse.thesisTts.json.RequestBodyJson;
-import ru.hse.thesisTts.json.ResponseStatusJson;
+import ru.hse.thesisTts.model.RequestBodyJson;
+import ru.hse.thesisTts.model.ResponseStatusJson;
 
 @RestController
 @Slf4j
@@ -26,9 +25,11 @@ public class ControllerAPI {
     @RequestMapping(value = "/check", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<Object> check() {
         try {
+            //throw new Exception();
             return new ResponseEntity<>(callProcessService.check(), HttpStatus.OK);
         } catch (Exception ex) {
-            return new ResponseEntity<>(new ResponseStatusJson(STATUS_ERROR), HttpStatus.SERVICE_UNAVAILABLE);
+            return new ResponseEntity<>(new ResponseStatusJson(STATUS_ERROR, "service is unavailable"),
+                    HttpStatus.SERVICE_UNAVAILABLE);
         }
     }
 
@@ -37,16 +38,13 @@ public class ControllerAPI {
         try {
             return new ResponseEntity<>(callProcessService.getWords(requestBodyJson.getInput()), HttpStatus.OK);
         } catch (Exception ex) {
-            return new ResponseEntity<>(new ResponseStatusJson(STATUS_ERROR), HttpStatus.SERVICE_UNAVAILABLE);
+            return new ResponseEntity<>(new ResponseStatusJson(STATUS_ERROR, "something goes wrong"),
+                    HttpStatus.SERVICE_UNAVAILABLE);
         }
     }
 
     @RequestMapping(value = "/get_audio", method = RequestMethod.POST, consumes = "application/json")
-    public ResponseEntity<byte[]> getAudio(@RequestBody RequestBodyJson requestBodyJson) {
-        try {
-            return callProcessService.getAudio(requestBodyJson.getInput());
-        } catch (Exception ex) {
-            return new ResponseEntity<>(null, new HttpHeaders(), HttpStatus.SERVICE_UNAVAILABLE);
-        }
+    public ResponseEntity<?> getAudio(@RequestBody RequestBodyJson requestBodyJson) {
+        return callProcessService.getAudio(requestBodyJson.getInput());
     }
 }

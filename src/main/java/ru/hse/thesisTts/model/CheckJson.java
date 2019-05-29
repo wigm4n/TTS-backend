@@ -1,16 +1,14 @@
-package ru.hse.thesisTts.json;
+package ru.hse.thesisTts.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor
 @AllArgsConstructor
-public class ResponseJson {
+public class CheckJson {
     @Getter
     @Setter
-    @JsonProperty("text")
-    private String text;
+    @JsonProperty("status")
+    private String status;
 }

@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.sap.core.connectivity.api.configuration.ConnectivityConfiguration;
 import com.sap.core.connectivity.api.configuration.DestinationConfiguration;
 import lombok.extern.slf4j.Slf4j;
-import ru.hse.thesisTts.json.*;
+import ru.hse.thesisTts.model.RequestBodyJson;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
